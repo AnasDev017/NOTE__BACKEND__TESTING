@@ -11,10 +11,25 @@ const app=express()
 
 DbCon()
 
-app.use(cors({
-    credentials: true,
-    origin: true  
-}));
+const whitelist = [
+    "https://mern-note-app-frontend-zeta.vercel.app",
+    "http://localhost:5173",
+  ];
+  
+  app.use(
+    cors({
+      credentials: true,
+      origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+    })
+  );
 app.use(cookieParser())
 app.use(express.json())
 app.use('/auth',AuthRoutes)
