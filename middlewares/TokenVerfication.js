@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../models/User.js";
-
 const TokenVerfication = async (req, res, next) => {
   try {
     const token = req.cookies.token;
@@ -9,7 +8,7 @@ const TokenVerfication = async (req, res, next) => {
         .status(404)
         .json({ success: false, message: "Unauthorized, please login" });
     }
-    const decoded = await jwt.decode(token, process.env.SecriteKey);
+    const decoded = await jwt.decode(token,"this is my key");
     const user = await UserModel.findById(decoded.userId);
 
     if (!user) {

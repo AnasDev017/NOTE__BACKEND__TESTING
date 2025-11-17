@@ -13,7 +13,7 @@ DbCon()
 
 app.use(cors({
     credentials: true,
-    origin: 'https://mern-note-app-frontend-zeta.vercel.app'  
+    origin: true  
 }));
 app.use(cookieParser())
 app.use(express.json())
